@@ -1,26 +1,74 @@
 import * as React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Component } from 'react'
+import DeckList from './components/DeckList'
+import DeckDetail from './components/DeckDetail'
+import { createDummyData } from './utils/helpers'
+import { getDecks } from './utils/api'
+import { receiveDecks } from './actions/decks';
+import reducer from './reducers'
+import middleware from './middlewares'
+import { Platform, StyleSheet, Text, View, StatusBar } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStore } from 'redux'
+import Constants  from 'expo-constants'
+import { Provider } from 'react-redux'
+
 
 const instructions = Platform.select({
   ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });
 
-export default function App() {
+function AppStatusBar ({backgroundColor, ...props}) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to React Native!</Text>
-      <Text style={styles.instructions}>To get started, edit App.js</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
-  );
+  )
+}
+
+const Stack = createStackNavigator()
+
+function MainNavigator() {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen
+      name='DeckList'
+      component={DeckList}
+      />
+      <Stack.Screen 
+        name='DeckDetail'
+        component={DeckDetail}
+      />  
+    </Stack.Navigator>
+  )
+}
+
+class App extends Component {
+  
+  componentDidMount(){
+    createDummyData()
+  }
+  render(){
+    return (
+      <NavigationContainer>
+        <Provider store={createStore(reducer, middleware)}>
+        <View style={styles.container}>
+          <AppStatusBar />
+          <Text style={styles.welcome}>Welcome to Mobile Flashcards!</Text>
+          <MainNavigator />
+        </View>
+      </Provider>
+      </NavigationContainer>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    
     backgroundColor: '#F5FCFF',
   },
   welcome: {
@@ -34,3 +82,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+export default App
