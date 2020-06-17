@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Component } from 'react'
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
+import AddCard from './components/AddCard'
 import { createDummyData } from './utils/helpers'
-import { getDecks } from './utils/api'
-import { receiveDecks } from './actions/decks';
+import { white } from './utils/colours'
 import reducer from './reducers'
 import middleware from './middlewares'
 import { Platform, StyleSheet, Text, View, StatusBar } from 'react-native';
@@ -34,13 +34,17 @@ function MainNavigator() {
   return(
     <Stack.Navigator>
       <Stack.Screen
-      name='DeckList'
+      name='Mobile Flash Cards Home'
       component={DeckList}
       />
       <Stack.Screen 
         name='DeckDetail'
         component={DeckDetail}
-      />  
+      />
+      <Stack.Screen 
+        name='AddCard'
+        component={AddCard}
+        /> 
     </Stack.Navigator>
   )
 }
@@ -48,7 +52,7 @@ function MainNavigator() {
 class App extends Component {
   
   componentDidMount(){
-    createDummyData()
+    // createDummyData()
   }
   render(){
     return (
@@ -56,7 +60,6 @@ class App extends Component {
         <Provider store={createStore(reducer, middleware)}>
         <View style={styles.container}>
           <AppStatusBar />
-          <Text style={styles.welcome}>Welcome to Mobile Flashcards!</Text>
           <MainNavigator />
         </View>
       </Provider>
@@ -68,8 +71,7 @@ class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
-    backgroundColor: '#F5FCFF',
+    backgroundColor: white,
   },
   welcome: {
     fontSize: 20,
