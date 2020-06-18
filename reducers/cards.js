@@ -1,4 +1,5 @@
-import { ADD_CARD, RECEIVE_CARDS } from '../actions/cards'
+import { ADD_CARD, RECEIVE_CARDS, DELETE_CARDS } from '../actions/cards'
+import { DELETE_DECK } from '../actions/decks'
 
 export function cards(state = {}, action){
     switch(action.type){
@@ -11,6 +12,10 @@ export function cards(state = {}, action){
             return{
                 ...state,
                 ...action.card
+            }
+        case DELETE_CARDS:
+            return {
+                ...state
             }
         default:
             return state

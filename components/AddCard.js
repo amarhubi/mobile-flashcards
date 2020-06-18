@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
-import Button from './Button'
+import Button from './reuseables/Button'
 import { connect } from 'react-redux'
-import { addCard } from '../actions/cards'
 import { addCardToDeck } from '../actions/decks'
 import { generateUID } from '../utils/helpers'
-import { saveCard } from '../utils/api'
 
 class AddCard extends Component {
     state = {
@@ -16,16 +14,13 @@ class AddCard extends Component {
     onPressAddCard = () => {
         const { addCard, deck } = this.props
         const { questionValue, answerValue } = this.state
-        const newCardId = generateUID()
         const newCard = {
-            [newCardId]: {
-                id: newCardId,
+                id: generateUID(),
                 question: questionValue,
                 answer: answerValue
-            }
         }
-        saveCard(deck, newCard, newCardId)
-        addCard(deck, newCard, newCardId)
+
+        addCard(deck, newCard)
         this.props.navigation.goBack()
     }
 
@@ -68,9 +63,8 @@ function mapStateToProps({ decks }, props){
 
 function mapDispatchToProps(dispatch){
     return {
-        addCard: (deck, card, cardId) => {
-            dispatch(addCard(card))
-            dispatch(addCardToDeck(deck, cardId))
+        addCard: (deck, card) => {
+            dispatch(addCardToDeck(deck, card))
         }
     }
 }

@@ -7,45 +7,55 @@ import { receiveCards } from '../actions/cards'
 import { getDecks, getCards } from '../utils/api'
 import Deck from './Deck'
 import { white, black } from '../utils/colours'
+import Button, { StyledButton } from './reuseables/Button'
 
 
 class DeckList extends Component {
     componentDidMount(){
         const { dispatch } = this.props
         getDecks().then(decks => {
-                console.log(decks)
                 dispatch(receiveDecks(decks))
             }
         )
-        getCards().then(cards => {
-                console.log(cards)
-                dispatch(receiveCards(cards))
-            }
-        )
+        // getCards().then(cards => {
+        //         console.log(cards)
+        //         dispatch(receiveCards(cards))
+        //     }
+        // )
     }
 
-    toDeckView = (id) => {
+    onPressDeck = (id) => {
         this.props.navigation.navigate('DeckDetail', { deckId: id })
+    }
+
+    onPressAddDeck = () => {
+        this.props.navigation.navigate('AddDeck')
     }
     
     render(){
         const { decks } = this.props
-        const keys = Object.keys(decks)
+        const deckIds = Object.keys(decks)
         return ( 
             <View style={styles.container}>
                 <Text style={styles.deckListTitle}>Available Flashcard Decks</Text>
-                { keys.length > 0 
-                    ? keys.map(id => 
+                { deckIds.length > 0 
+                    ? deckIds.map(id => 
                         <TouchableOpacity 
                             style={[styles.deck, styles.center]}
-                            onPress={() => this.toDeckView(id)}
+                            onPress={() => this.onPressDeck(id)}
                             key={id}
                         >
                             <Text style={styles.deckTitle}>{decks[id].name}</Text>
-                            <Text style={styles.deckNumbers}>{decks[id].cards.length} Cards</Text>
+                            <Text style={styles.deckNumbers}>
+                                {decks[id].cards.length === 1 
+                                    ? `${decks[id].cards.length} card`
+                                    : `${decks[id].cards.length} cards`}
+                            </Text>
                         </TouchableOpacity>
+                       
                         )
                     : <Text>Oops, looks like you don't have any decks saved yet. Press the button below to create your first deck.</Text> }
+                <Button onPress={this.onPressAddDeck} text="Add Deck"/>
             </View>
         )
     }

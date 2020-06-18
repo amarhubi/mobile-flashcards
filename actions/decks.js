@@ -4,7 +4,6 @@ export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK'
 export const DELETE_DECK = 'DELETE_DECK'
 
 export function receiveDecks (decks){
-    console.log('receiveing')
     return {
         type: RECEIVE_DECKS,
         decks
@@ -18,16 +17,17 @@ export function addDeck (deck){
     }
 }
 
-export function addCardToDeck(deck, cardId){
+export function addCardToDeck(deck, card){
     return {
         type: ADD_CARD_TO_DECK,
         deck,
-        cardId,
+        card,
     }
 }
 
-// export function DELETE_DECK(){
-//     return {
-//         type: 
-//     }
-// }
+export function deleteDeck(deckId){
+    return {
+        type: DELETE_DECK,
+        deckId
+    }
+}

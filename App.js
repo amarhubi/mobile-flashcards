@@ -3,6 +3,8 @@ import { Component } from 'react'
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
 import AddCard from './components/AddCard'
+import AddDeck from './components/AddDeck'
+import QuizContainer from './components/QuizContainer'
 import { createDummyData } from './utils/helpers'
 import { white } from './utils/colours'
 import reducer from './reducers'
@@ -45,6 +47,14 @@ function MainNavigator() {
         name='AddCard'
         component={AddCard}
         /> 
+      <Stack.Screen 
+        name='AddDeck'
+        component={AddDeck}
+        /> 
+      <Stack.Screen
+        name='QuizContainer'
+        component={QuizContainer}
+        />
     </Stack.Navigator>
   )
 }
@@ -52,7 +62,7 @@ function MainNavigator() {
 class App extends Component {
   
   componentDidMount(){
-    // createDummyData()
+    createDummyData()
   }
   render(){
     return (

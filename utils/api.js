@@ -25,9 +25,25 @@ export function saveCard(deck, card, cardId){
             }
             AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(updatedDecks))
         })
-    return AsyncStorage.mergeItem(CARD_STORAGE_KEY, JSON.stringify(
+    AsyncStorage.mergeItem(CARD_STORAGE_KEY, JSON.stringify(
         { 
-            [cardId]: card[cardId]
+            card
         }
     ))
+}
+
+export function deleteDeckFromStore(deckId){
+    return AsyncStorage.getItem(DECK_STORAGE_KEY)
+      .then((results) => {
+        const decks = JSON.parse(results)
+        decks[deckId] = undefined
+        delete decks[deckId]
+        AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(decks))
+      })
+}
+
+export function addDeckToStore(deck){
+    AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+        deck
+    }))
 }
