@@ -11,3 +11,5 @@ Starting the application
 `expo start`
 
 If you like, you can load dummy data into the app. Do this by uncommenting line 70 in App.js
+
+The app was tested on iOS simulator
