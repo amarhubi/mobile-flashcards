@@ -6,8 +6,8 @@ import QuizResults from './QuizResults'
 import { initialiseQuiz } from '../actions/quiz'
 
 class QuizContainer extends Component {
-    toDeckList = () => {
-        this.props.navigation.navigate('DeckList')
+    toDeck = () => {
+        this.props.navigation.goBack()
     }
 
     componentDidMount(){
@@ -21,7 +21,7 @@ class QuizContainer extends Component {
         return (
             quizFinished 
                 ? <QuizResults 
-                    toDeckList={this.toDeckList}
+                    toDeckList={this.toDeck}
                   /> 
                 : <Quiz 
                     deckId={deckId}

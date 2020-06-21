@@ -47,12 +47,10 @@ export function clearLocalNotification () {
   }
   
   export function setLocalNotification () {
-      
     AsyncStorage.getItem(NOTIFICATION_KEY)
       .then(JSON.parse)
       .then((data) => {
         if (data === null) {
-            Permissions.getAsync(Permissions.NOTIFICATIONS).then((p) => {debugger})
           Permissions.askAsync(Permissions.NOTIFICATIONS)
             .then(({ status }) => {
                 
@@ -71,7 +69,6 @@ export function clearLocalNotification () {
                     repeat: 'day',
                   }
                 )
-  
                 AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
               }
             })

@@ -5,7 +5,7 @@ import { CenterView,
     PrimaryButton,
     PrimaryText,
     Heading1, Heading2, Heading3, StyledButtonText
- } from './reuseables/Button'
+ } from './reuseables/StyledComponents'
 import { connect } from 'react-redux'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import { initialiseQuiz } from '../actions/quiz'
@@ -16,7 +16,7 @@ class QuizResults extends Component {
         this.props.restartQuiz(this.props.totalQuestions)
     }
 
-    onPressGoBackToQuizList = () => {
+    onPressBackToDeck = () => {
         this.props.toDeckList()
     }
 
@@ -37,8 +37,8 @@ class QuizResults extends Component {
                     <StyledButton onPress={this.onPressRestartQuiz}>
                         <StyledButtonText>Restart quiz</StyledButtonText>
                     </StyledButton>
-                    <PrimaryButton onPress={this.onPressGoBackToQuizList}>
-                        <PrimaryText>Try another quiz</PrimaryText>
+                    <PrimaryButton onPress={this.onPressBackToDeck}>
+                        <PrimaryText>Back to Deck View</PrimaryText>
                     </PrimaryButton>
                 </CenterView>
             </CenterView>    

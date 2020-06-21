@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
-import Button from './reuseables/Button'
+import { View, TextInput, StyleSheet } from 'react-native'
+import { StyledButton, StyledButtonText } from './reuseables/StyledComponents'
 import { connect } from 'react-redux'
-import { addCard } from '../actions/cards'
 import { addDeck } from '../actions/decks'
 import { generateUID } from '../utils/helpers'
 import { addDeckToStore } from '../utils/api'
@@ -29,6 +28,7 @@ class AddDeck extends Component {
     }
 
     render(){
+        const { deckName } = this.state
         return (
             <View>
                 <TextInput 
@@ -36,7 +36,9 @@ class AddDeck extends Component {
                     onChangeText={(deckName) => this.setState({deckName})}
                     placeholder='Deck Name'
                 />
-                <Button onPress={this.onPressAddDeck} text='Save Deck'/>
+                <StyledButton onPress={this.onPressAddDeck} disabled={deckName === '' ? true : false}>
+                    <StyledButtonText>Add Deck</StyledButtonText>
+                </StyledButton>
             </View>
         )
     }
@@ -50,15 +52,10 @@ styles = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         marginTop: 30,
+        marginBottom: 20,
         padding: 5
     }
 })
-
-// function mapStateToProps({ decks }, props){
-//     return {
-//         deck: decks[props.route.params.deckId]
-//     }
-// }
 
 function mapDispatchToProps(dispatch){
     return {

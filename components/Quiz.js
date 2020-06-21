@@ -6,7 +6,7 @@ import { CenterView,
     RejectButton,
     ApproveButton,
     PrimaryText,
-    Heading1, Heading2, Heading3 } from './reuseables/Button'
+    Heading1, Heading2, Heading3 } from './reuseables/StyledComponents'
 import { connect } from 'react-redux'
 import { incrementCorrectQuestions, toggleQuiz,  } from '../actions/quiz'
 

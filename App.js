@@ -5,7 +5,7 @@ import DeckDetail from './components/DeckDetail'
 import AddCard from './components/AddCard'
 import AddDeck from './components/AddDeck'
 import QuizContainer from './components/QuizContainer'
-import { createDummyData } from './utils/helpers'
+import { createDummyData, setLocalNotification } from './utils/helpers'
 import { white } from './utils/colours'
 import reducer from './reducers'
 import middleware from './middlewares'
@@ -67,6 +67,7 @@ function MainNavigator() {
 class App extends Component {
   
   componentDidMount(){
+    setLocalNotification()
     createDummyData()
   }
   render(){

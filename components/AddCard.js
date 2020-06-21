@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
-import Button from './reuseables/Button'
+import { StyledButton, StyledButtonText } from './reuseables/StyledComponents'
 import { connect } from 'react-redux'
 import { addCardToDeck } from '../actions/decks'
 import { generateUID } from '../utils/helpers'
@@ -26,6 +26,7 @@ class AddCard extends Component {
     }
 
     render(){
+        const { questionValue, answerValue } = this.state
         return (
             <View>
                 <TextInput 
@@ -34,11 +35,15 @@ class AddCard extends Component {
                     placeholder='Question'
                 />
                 <TextInput 
-                    style={styles.textInput}
+                    style={[styles.textInput, {marginBottom: 20 }]}
                     onChangeText={(answerValue) => this.setState({answerValue})}
                     placeholder='Answer'
                 />
-                <Button onPress={this.onPressAddCard} text='Save Card'/>
+                <StyledButton 
+                    onPress={this.onPressAddCard}
+                    disabled={questionValue==='' || answerValue==='' ? true : false}>
+                        <StyledButtonText>Save Card</StyledButtonText>
+                    </StyledButton>
             </View>
         )
     }

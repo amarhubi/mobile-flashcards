@@ -6,7 +6,7 @@ import { receiveCards } from '../actions/cards'
 import { getDecks, getCards } from '../utils/api'
 import Deck from './Deck'
 import { white, black } from '../utils/colours'
-import { StyledButton, StyledButtonText } from './reuseables/Button'
+import { StyledButton, StyledButtonText } from './reuseables/StyledComponents'
 
 function DeckSnippet({id, name, cards, onPress}){
     return (

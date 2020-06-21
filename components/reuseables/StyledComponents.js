@@ -21,6 +21,9 @@ export const StyledButton = styled.TouchableOpacity`
     margin: 5px 20px 5px 20px;
     justify-content: center;
     align-items: center;
+    ${props => props.disabled===true && `
+        opacity: 0.4;
+    `}
 `
 export const DeleteButton = styled(StyledButton)`
     border-color: red;

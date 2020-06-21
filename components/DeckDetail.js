@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { white, red, black } from '../utils/colours'
 import { 
     StyledButton, 
     CenterView, 
@@ -10,11 +8,11 @@ import {
     PrimaryButton,
     PrimaryText,
     DeleteButton,
-    DeleteText
- } from './reuseables/Button'
+    DeleteText,
+    Heading1, Heading2, Heading3
+ } from './reuseables/StyledComponents'
 import { deleteDeckFromStore } from '../utils/api'
 import { deleteDeck } from '../actions/decks'
-import styled from 'styled-components/native'
 
 class DeckDetail extends Component {
     onPressAddCard = () => {
@@ -38,18 +36,19 @@ class DeckDetail extends Component {
             deck !== undefined ? 
             (<CenterView >
                 <CenterView>
-                    <Text style={styles.deckTitle}>{deck.name}</Text>
-                    <Text style={styles.deckCards}>
+                    <Heading1 style={styles.deckTitle}>{deck.name}</Heading1>
+                    <Heading2 style={styles.deckCards}>
                         {deck.cards.length === 1 
                             ? `${deck.cards.length} card`
                             : `${deck.cards.length} cards`}
-                    </Text>
+                    </Heading2>
+                    { deck.cards.length === 0 && <Heading3>The deck is empty. Add some cards to be able to start the quiz</Heading3>}
                 </CenterView>
                 <CenterView>
                     <StyledButton style={styles.addCardButton} onPress={this.onPressAddCard}>
                         <StyledButtonText>Add Card</StyledButtonText>
                     </StyledButton>
-                    <PrimaryButton onPress={this.onPressStartQuiz}>
+                    <PrimaryButton onPress={this.onPressStartQuiz} disabled={deck.cards.length === 0 ? true : false}>
                         <PrimaryText>Start Quiz</PrimaryText>
                     </PrimaryButton>
                     <DeleteButton style={styles.deleteDeckButton} onPress={this.onPressDeleteDeck}>
