@@ -1,14 +1,29 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, FlatList } from 'react-native'
 import { connect } from 'react-redux'
-import { handleInitialData } from '../actions/shared'
 import { receiveDecks } from '../actions/decks'
 import { receiveCards } from '../actions/cards'
 import { getDecks, getCards } from '../utils/api'
 import Deck from './Deck'
 import { white, black } from '../utils/colours'
-import Button, { StyledButton } from './reuseables/Button'
+import { StyledButton, StyledButtonText } from './reuseables/Button'
 
+function DeckSnippet({id, name, cards, onPress}){
+    return (
+        <TouchableOpacity 
+            style={[styles.deck, styles.center]}
+            onPress={() => onPress(id)}
+            key={id}
+        >
+            <Text style={styles.deckTitle}>{name}</Text>
+            <Text style={styles.deckNumbers}>
+                {cards.length === 1 
+                    ? `${cards.length} card`
+                    : `${cards.length} cards`}
+            </Text>
+        </TouchableOpacity>
+    )
+}
 
 class DeckList extends Component {
     componentDidMount(){
@@ -17,45 +32,39 @@ class DeckList extends Component {
                 dispatch(receiveDecks(decks))
             }
         )
-        // getCards().then(cards => {
-        //         console.log(cards)
-        //         dispatch(receiveCards(cards))
-        //     }
-        // )
+    }
+
+    renderDeckSnippet = ({ item }) => {
+        return <DeckSnippet { ...item } onPress={this.onPressDeck}/>
     }
 
     onPressDeck = (id) => {
-        this.props.navigation.navigate('DeckDetail', { deckId: id })
+        const { decks, navigation } = this.props
+        navigation.navigate('DeckDetail', { deckId: id, title: decks[id].name })
     }
 
     onPressAddDeck = () => {
-        this.props.navigation.navigate('AddDeck')
+        this.props.navigation.navigate('AddDeck', {title: 'Create New Deck'})
     }
     
     render(){
         const { decks } = this.props
-        const deckIds = Object.keys(decks)
+        const decksArray = Object.values(decks)
         return ( 
             <View style={styles.container}>
                 <Text style={styles.deckListTitle}>Available Flashcard Decks</Text>
-                { deckIds.length > 0 
-                    ? deckIds.map(id => 
-                        <TouchableOpacity 
-                            style={[styles.deck, styles.center]}
-                            onPress={() => this.onPressDeck(id)}
-                            key={id}
-                        >
-                            <Text style={styles.deckTitle}>{decks[id].name}</Text>
-                            <Text style={styles.deckNumbers}>
-                                {decks[id].cards.length === 1 
-                                    ? `${decks[id].cards.length} card`
-                                    : `${decks[id].cards.length} cards`}
-                            </Text>
-                        </TouchableOpacity>
-                       
-                        )
-                    : <Text>Oops, looks like you don't have any decks saved yet. Press the button below to create your first deck.</Text> }
-                <Button onPress={this.onPressAddDeck} text="Add Deck"/>
+                {
+                    decksArray.length > 0 
+                        ?  <FlatList style={{alignSelf: 'stretch', marginTop: 10, marginRight: 20, marginBottom: 0, marginLeft: 20}} 
+                                data={decksArray}
+                                renderItem={this.renderDeckSnippet}
+                            />
+                        : <Text>Oops, looks like you don't have any decks saved yet. Press the button below to create your first deck.</Text>
+                }
+
+                <StyledButton onPress={this.onPressAddDeck}>
+                    <StyledButtonText>Add Deck</StyledButtonText>
+                </StyledButton>
             </View>
         )
     }
@@ -65,7 +74,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: white,
-      padding: 15,
+      padding: 10,
       justifyContent: 'flex-start',
       alignItems: 'center',
     },
@@ -76,7 +85,7 @@ const styles = StyleSheet.create({
         height: 70,
         alignSelf: 'stretch',
         padding: 20,
-        margin: 20,
+        margin: 5,
         backgroundColor: black,
     },
     deckTitle: {

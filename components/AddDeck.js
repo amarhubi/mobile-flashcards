@@ -13,7 +13,7 @@ class AddDeck extends Component {
     }
 
     onPressAddDeck = () => {
-        const { addDeck } = this.props
+        const { addDeck, navigation } = this.props
         const { deckName } = this.state
         const newDeckId = generateUID()
         const newDeck = {
@@ -25,7 +25,7 @@ class AddDeck extends Component {
         }
         addDeckToStore(newDeck)
         addDeck(newDeck)
-        this.props.navigation.goBack()
+        navigation.navigate('DeckDetail', { deckId: newDeck[newDeckId].id, title: newDeck[newDeckId].name })
     }
 
     render(){

@@ -12,7 +12,7 @@ export function getCards(){
         .then(JSON.parse)
 }
 
-export function saveCard(deck, card, cardId){
+export function saveCard(deck, card){
     AsyncStorage.getItem(DECK_STORAGE_KEY)
         .then(JSON.parse)
         .then(decks => {
@@ -20,16 +20,12 @@ export function saveCard(deck, card, cardId){
                 ...decks,
                 [deck.id]: {
                     ...decks[deck.id],
-                    cards: decks[deck.id].cards.concat(cardId) 
+                    cards: decks[deck.id].cards.concat(card) 
                 }   
             }
             AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(updatedDecks))
-        })
-    AsyncStorage.mergeItem(CARD_STORAGE_KEY, JSON.stringify(
-        { 
-            card
         }
-    ))
+    )
 }
 
 export function deleteDeckFromStore(deckId){
@@ -42,8 +38,7 @@ export function deleteDeckFromStore(deckId){
       })
 }
 
-export function addDeckToStore(deck){
+export function addDeckToStore(deck){    
     AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
-        deck
-    }))
-}
+        ...deck
+    }))}

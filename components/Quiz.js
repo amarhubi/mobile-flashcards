@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
-import { CenterView, StyledButton } from './reuseables/Button'
+import { Text, StyleSheet } from 'react-native'
+import { CenterView,
+    StyledButton,
+    StyledButtonText,
+    RejectButton,
+    ApproveButton,
+    PrimaryText,
+    Heading1, Heading2, Heading3 } from './reuseables/Button'
 import { connect } from 'react-redux'
 import { incrementCorrectQuestions, toggleQuiz,  } from '../actions/quiz'
 
@@ -20,6 +26,7 @@ class Quiz extends Component {
         answer && this.props.incrementCorrectQuestions()
         this.setState((prevState, props) => ({
             currentQuestion: prevState.currentQuestion + 1,
+            viewingQuestion: true,
         })
     )}
 
@@ -29,33 +36,40 @@ class Quiz extends Component {
     }
 
     render(){
-        console.log(this.props)
         const {currentQuestion, viewingQuestion } = this.state
         const { deck } = this.props
-        console.log(deck)
         const { cards } = deck
 
         return (
             <CenterView>
                 <CenterView>
-                    <Text>Quiz {deck.name}</Text>
-                    <Text>{currentQuestion + 1} / { cards.length }</Text>
+                    <CenterView>
+                        <Heading1>{deck.name}</Heading1>
+                        <Heading2>{currentQuestion + 1} / { cards.length }</Heading2>
+                    </CenterView>
+                    
                     { viewingQuestion 
-                        ? <Text>Question: {cards[currentQuestion] && cards[currentQuestion].question}</Text>
-                        : <Text>Answer {cards[currentQuestion] && cards[currentQuestion].answer}</Text>
+                        ? <CenterView>
+                            <Heading3>Question</Heading3>
+                            <Heading2>{cards[currentQuestion] && cards[currentQuestion].question}</Heading2>
+                          </CenterView>
+                        : <CenterView>
+                            <Heading3>Answer</Heading3>
+                            <Heading2>{cards[currentQuestion] && cards[currentQuestion].answer}</Heading2>
+                          </CenterView>
                     }
                 </CenterView>
-                <View>
+                <CenterView>
                     <StyledButton onPress={this.onPressFilpCard}>
-                        <Text>Flip Card</Text>
+                        <StyledButtonText>Flip Card</StyledButtonText>
                     </StyledButton>
-                    <StyledButton onPress={() => this.answerQuestion(true)}>
-                        <Text>Correct</Text>
-                    </StyledButton>
-                    <StyledButton onPress={() => this.answerQuestion(false)}>
-                        <Text>Incorrrect</Text>
-                    </StyledButton>
-                </View>
+                    <ApproveButton onPress={() => this.answerQuestion(true)}>
+                        <PrimaryText>Correct</PrimaryText>
+                    </ApproveButton>
+                    <RejectButton onPress={() => this.answerQuestion(false)}>
+                        <PrimaryText>Incorrrect</PrimaryText>
+                    </RejectButton>
+                </CenterView>
             </CenterView>
         )
     }

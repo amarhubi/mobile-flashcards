@@ -36,24 +36,29 @@ function MainNavigator() {
   return(
     <Stack.Navigator>
       <Stack.Screen
-      name='Mobile Flash Cards Home'
+      name='DeckList'
       component={DeckList}
+      options={{title: 'Mobile Flash Cards'}}
       />
       <Stack.Screen 
         name='DeckDetail'
         component={DeckDetail}
+        options={({ route }) => ({ title: route.params.title })}
       />
       <Stack.Screen 
         name='AddCard'
         component={AddCard}
+        options={({ route }) => ({ title: route.params.title })}
         /> 
       <Stack.Screen 
         name='AddDeck'
         component={AddDeck}
+        options={({ route }) => ({ title: route.params.title })}
         /> 
       <Stack.Screen
         name='QuizContainer'
         component={QuizContainer}
+        options={({ route }) => ({ title: route.params.title })}
         />
     </Stack.Navigator>
   )

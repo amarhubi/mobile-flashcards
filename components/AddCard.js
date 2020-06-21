@@ -4,6 +4,7 @@ import Button from './reuseables/Button'
 import { connect } from 'react-redux'
 import { addCardToDeck } from '../actions/decks'
 import { generateUID } from '../utils/helpers'
+import { saveCard } from '../utils/api'
 
 class AddCard extends Component {
     state = {
@@ -19,7 +20,7 @@ class AddCard extends Component {
                 question: questionValue,
                 answer: answerValue
         }
-
+        saveCard(deck, newCard) 
         addCard(deck, newCard)
         this.props.navigation.goBack()
     }

@@ -6,37 +6,23 @@ import QuizResults from './QuizResults'
 import { initialiseQuiz } from '../actions/quiz'
 
 class QuizContainer extends Component {
-    // state = {
-    //     quizFinished: false,
-    //     numberCorrect: 0,
-    //     totalQuestions: 0
-    // }
-
-    // incrementCorrectQuestions = () => {
-    //     this.setState((prevState) => ({
-    //             numberCorrect: prevState.numberCorrect + 1 
-    //     })
-    // )}
-
-    // toggleQuiz = () => {
-    //     this.setState((prevState) => ({
-    //         quizFinished: !prevState.quizFinished
-    //     })
-    // )}
+    toDeckList = () => {
+        this.props.navigation.navigate('DeckList')
+    }
 
     componentDidMount(){
         const { dispatch, deck } = this.props
-        
         dispatch(initialiseQuiz(deck.cards.length))
     }
 
     render(){
         const { quizFinished } = this.props
         const { deckId } = this.props.route.params
-        console.log(this.props)
         return (
             quizFinished 
-                ? <QuizResults /> 
+                ? <QuizResults 
+                    toDeckList={this.toDeckList}
+                  /> 
                 : <Quiz 
                     deckId={deckId}
                   />

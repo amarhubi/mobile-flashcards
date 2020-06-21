@@ -4,10 +4,6 @@ import { black, white } from '../utils/colours'
 import { connect } from 'react-redux'
 
 class Deck extends Component {
-    toDeckView(id) {
-        console.log(`navigating to ${id}`)    
-    }
-
     render(){
         const { name, questions, id } = this.props.deck
 

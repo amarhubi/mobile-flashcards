@@ -13,14 +13,6 @@ export default function quiz(state = {}, action){
                 ...state,
                 correctQuestions: state.correctQuestions + 1
             }
-            
-        // case RESET_QUIZ:
-        //     return {
-        //         totalQuestions: action.totalQuestions,
-        //         correctQuestions: 0,
-        //         quizFinished: false
-        //     }
-        
         case TOGGLE_QUIZ:
             return {
                 ...state,

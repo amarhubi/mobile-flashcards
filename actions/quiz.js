@@ -1,6 +1,6 @@
 export const INCREMENT_CORRECT_QUESTIONS = 'INCREMENT_CORRECT_QUESTIONS'
 export const RESET_QUIZ = 'RESET_QUIZ'
-export const INITIALISE_QUIZ = 'RECEIVE_TOTAL_QUESTIONS'
+export const INITIALISE_QUIZ = 'INITIALISE_QUIZ'
 export const TOGGLE_QUIZ = 'TOGGLE_QUIZ'
 
 export function incrementCorrectQuestions(){
